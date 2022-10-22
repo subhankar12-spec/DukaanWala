@@ -1,0 +1,6 @@
+Node Js Set up
+
+npm init
+npm i express mongoose dotenv\
+npm i nodemon and add start script in package.json(node server.js)
+npm run dev(See nodemon docs or tutorials)
