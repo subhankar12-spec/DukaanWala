@@ -4,3 +4,11 @@ npm init
 npm i express mongoose dotenv\
 npm i nodemon and add start script in package.json(node server.js)
 npm run dev(See nodemon docs or tutorials)
+
+
+
+
+
+
+https://youtu.be/yHmr4pA7Xss (OAUTH2 Postman)
+https://youtu.be/Q0a0594tOrc(OAUTH2)
