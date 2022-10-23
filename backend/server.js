@@ -53,15 +53,20 @@ app.get('/protected', isLoggedIn, (req, res) => {
   res.send(`Hello ${req.user.displayName}`);
 });
 
-app.post('/logout', (req, res) => {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect('/');
-  });
+// app.get('/logout', (req, res) => {
+//   req.logout(function (err) {
+//     if (err) {
+//       return next(err);
+//     }
+//     res.redirect('/');
+//   });
+app.get('/logout', (req, res) => {
+  // req.logout(() => {
+  //   res.redirect('/');
+  // });
 
   req.session.destroy();
+  // res.redirect('/');
   res.send('Goodbye!');
 });
 
