@@ -12,3 +12,17 @@ npm run dev(See nodemon docs or tutorials)
 
 https://youtu.be/yHmr4pA7Xss (OAUTH2 Postman)
 https://youtu.be/Q0a0594tOrc(OAUTH2)
+
+
+
+Frontend:
+=======
+Footer:https://youtu.be/MgKaxe9euI4
+Navbar:https://youtu.be/377AQ0y6LPA
+Grid:https://www.youtube.com/watch?v=eYGIIc2FOVI
+CSS Customization: https://youtu.be/jlHXgu38amM
+
+
+React
+====
+Imports: https://create-react-app.dev/docs/importing-a-component/

@@ -1,11 +1,14 @@
 import './App.css';
-import Footer from './components/footer/Footer';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomeScreen from './screens/HomeScreen';
 
 function App() {
   return (
-    <>
-      <Footer />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomeScreen />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
