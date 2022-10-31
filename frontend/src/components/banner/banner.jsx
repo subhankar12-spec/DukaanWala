@@ -34,7 +34,7 @@ const Banner = () => {
         swipeable={false}
         draggable={false}
         responsive={responsive}
-        infinite={true}//issue
+        infinite={true} //issue
         autoPlay={true}
         autoPlaySpeed={4000}
         keyBoardControl={true}
