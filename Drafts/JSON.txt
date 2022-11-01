@@ -17,3 +17,17 @@ new
 http://localhost:4000/products/new
 All Products
 http://localhost:4000/products/
+
+Register
+=======
+{
+  "name": "Subho",
+  "email":"subhankarmondal360@gmail.com",
+  "password":"Subhankar@69"
+}
+
+Login
+{
+  "email":"subhankarmondal360@gmail.com",
+  "password":"Subhankar@69"
+}

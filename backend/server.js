@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const dbConnection = require('./database/db');
+const errorMiddleware = require('./middleware/error');
 
 //Passport o-auth20
 const passport = require('passport');
@@ -30,6 +31,7 @@ dotenv.config({ path: './config/configurations.env' });
 
 //Routes
 const products = require('./routes/productRoutes');
+const users = require('./routes/userRoutes');
 
 // app.get('/', (req, res) => {
 //   res.send('This is Test');
@@ -83,3 +85,5 @@ app.listen(process.env.PORT, () => {
 dbConnection();
 
 app.use('/', products);
+app.use('/', users);
+app.use(errorMiddleware);
