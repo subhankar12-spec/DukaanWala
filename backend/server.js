@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const dbConnection = require('./database/db');
 
 //Passport o-auth20
@@ -8,6 +9,7 @@ const session = require('express-session');
 require('./utils/googleAuth');
 
 const app = express();
+app.use(cors());
 
 function isLoggedIn(req, res, next) {
   req.user ? next() : res.sendStatus(401);

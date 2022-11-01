@@ -19,17 +19,21 @@ const CardBox = styled(Box)`
   text-decoration: none;
 `;
 
-const Cards = () => {
+const Cards = ({ products }) => {
   return (
     <>
       <Grid container spacing={3}>
-        {bannerData.map((image) => (
+        {products.map((product) => (
           <Grid item xs={3}>
             {/* <CardBox sx={{ width: '300px', height: '300px' }}> */}
             <Card>
-              <CardMedia component="img" height="140" image={image.url} />
+              <CardMedia
+                component="img"
+                height="140"
+                image={product.images[0].url}
+              />
               <CardContent>
-                <Typography>Hello</Typography>
+                <Typography>{product.name}</Typography>
                 <Typography>Hello</Typography>
                 <Typography>Hello</Typography>
               </CardContent>
