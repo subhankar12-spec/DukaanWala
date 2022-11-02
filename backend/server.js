@@ -10,7 +10,7 @@ const session = require('express-session');
 require('./utils/googleAuth');
 
 const app = express();
-app.use(cors());
+// app.use(cors());
 
 function isLoggedIn(req, res, next) {
   req.user ? next() : res.sendStatus(401);

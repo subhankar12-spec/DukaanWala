@@ -8,8 +8,10 @@ import { useSelector, useDispatch } from 'react-redux'; // hooks
 import { getProducts as getAllProducts } from '../redux/actions/productActions';
 
 const HomeScreen = () => {
+ 
   const getProducts = useSelector((state) => state.getProducts);
-  const { products, error } = getProducts;
+  
+  const { products } = getProducts;
 
   const dispatch = useDispatch();
 
@@ -20,7 +22,7 @@ const HomeScreen = () => {
     <>
       <PrimarySearchAppBar />
       <Banner />
-      <Cards products={products}/>
+      <Cards products={products} />
       <Footer />
     </>
   );
