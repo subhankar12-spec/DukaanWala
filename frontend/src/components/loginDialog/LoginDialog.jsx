@@ -8,7 +8,7 @@ import {
   styled,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../redux/actions/userActions';
+import { login, register } from '../../redux/actions/userActions';
 import { useNavigate } from 'react-router-dom';
 
 const Text = styled(Typography)`
@@ -30,6 +30,7 @@ const LoginDialog = ({ open, setOpen }) => {
   const navigate = useNavigate();
   //login
   const loginInitialValues = {
+    name: '',
     email: '',
     password: '',
   };
@@ -43,8 +44,13 @@ const LoginDialog = ({ open, setOpen }) => {
   const loginUser = () => {
     console.log(logIn);
     dispatch(login(logIn.email, logIn.password));
-    // if (isAuthenticated) localStorage.setItem('user', JSON.stringify(user));
-    // navigate('/product');
+
+    setOpen(false);
+  };
+
+  const registerUser = () => {
+    console.log(logIn);
+    dispatch(register(logIn.name, logIn.email, logIn.password));
     setOpen(false);
   };
 
@@ -111,10 +117,6 @@ const LoginDialog = ({ open, setOpen }) => {
             <Button variant="contained" color="warning" sx={{ marginTop: 3 }}>
               Login
             </Button>
-            <Text>
-              By continuing, you agree to Flipkart's Terms of Use and Privacy
-              Policy.
-            </Text>
             <CreateAccount onClick={() => toggle()}>
               New to Dukaanwala? Create an account
             </CreateAccount>
@@ -137,6 +139,16 @@ const LoginDialog = ({ open, setOpen }) => {
             <TextField
               type={'text'}
               variant="outlined"
+              onChange={(e) => onValueChange(e)}
+              name="name"
+              placeholder="Name"
+              margin="normal"
+            ></TextField>
+            <TextField
+              type={'text'}
+              variant="outlined"
+              onChange={(e) => onValueChange(e)}
+              name="email"
               placeholder="Email"
               margin="normal"
             ></TextField>
@@ -144,19 +156,22 @@ const LoginDialog = ({ open, setOpen }) => {
               type={'password'}
               variant="outlined"
               placeholder="Password"
+              onChange={(e) => onValueChange(e)}
+              name="password"
               margin="normal"
             ></TextField>
-            <Button variant="contained" color="warning" sx={{ marginTop: 3 }}>
-              Login
-            </Button>
-            <Text style={{ textAlign: 'center' }}>OR</Text>
-            <Button variant="contained" color="warning" sx={{ marginTop: 3 }}>
-              Login
-            </Button>
             <Text>
               By continuing, you agree to Flipkart's Terms of Use and Privacy
               Policy.
             </Text>
+            <Button
+              variant="contained"
+              color="warning"
+              sx={{ marginTop: 3 }}
+              onClick={() => registerUser()}
+            >
+              SignUp
+            </Button>
           </Box>
         </form>
       )}
