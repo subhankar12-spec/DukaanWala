@@ -43,7 +43,7 @@ const LoginDialog = ({ open, setOpen }) => {
   const loginUser = () => {
     console.log(logIn);
     dispatch(login(logIn.email, logIn.password));
-    if (isAuthenticated) localStorage.setItem('user', JSON.stringify(user));
+    // if (isAuthenticated) localStorage.setItem('user', JSON.stringify(user));
     // navigate('/product');
     setOpen(false);
   };

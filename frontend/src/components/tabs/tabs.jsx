@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
+import styled from '@mui/material';
 
 const TabWrapper = styled(Tabs)(({ theme }) => ({
   padding: theme.spacing(0, 40),
