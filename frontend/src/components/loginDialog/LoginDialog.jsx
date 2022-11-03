@@ -113,10 +113,7 @@ const LoginDialog = ({ open, setOpen }) => {
             >
               Login
             </Button>
-            <Text style={{ textAlign: 'center' }}>OR</Text>
-            <Button variant="contained" color="warning" sx={{ marginTop: 3 }}>
-              Login
-            </Button>
+
             <CreateAccount onClick={() => toggle()}>
               New to Dukaanwala? Create an account
             </CreateAccount>
@@ -171,6 +168,15 @@ const LoginDialog = ({ open, setOpen }) => {
               onClick={() => registerUser()}
             >
               SignUp
+            </Button>
+            <Text style={{ textAlign: 'center' }}>OR</Text>
+            <Button
+              href="http://localhost:4000/auth/google"
+              variant="outlined"
+              color="warning"
+              sx={{ marginTop: 3 }}
+            >
+              Signup With Google
             </Button>
           </Box>
         </form>
