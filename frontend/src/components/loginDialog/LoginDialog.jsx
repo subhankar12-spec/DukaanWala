@@ -10,6 +10,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { login, register } from '../../redux/actions/userActions';
 import { useNavigate } from 'react-router-dom';
+import GoogleButton from 'react-google-button';
 
 const Text = styled(Typography)`
   color: #878787;
@@ -73,6 +74,9 @@ const LoginDialog = ({ open, setOpen }) => {
   //     history.push(redirect);
   //   }
   // }, [dispatch, error, alert, history, isAuthenticated, redirect]);
+  const redirectToGoogle = async () => {
+    // navigate('/auth/google');
+  };
   return (
     <Dialog open={open} onClose={handleClose}>
       {signUp ? (
@@ -170,13 +174,23 @@ const LoginDialog = ({ open, setOpen }) => {
               SignUp
             </Button>
             <Text style={{ textAlign: 'center' }}>OR</Text>
-            <Button
+            {/* <Button
               href="http://localhost:4000/auth/google"
               variant="outlined"
               color="warning"
               sx={{ marginTop: 3 }}
             >
               Signup With Google
+            </Button> */}
+            <Button
+              size="medium"
+              href="http://localhost:4000/auth/google"
+              variant="text"
+              color="inherit"
+              sx={{ textTransform: 'none' }}
+              disableRipple
+            >
+              <GoogleButton />
             </Button>
           </Box>
         </form>

@@ -6,7 +6,7 @@ const errorMiddleware = require('./middleware/error');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const session = require('express-session');
+const session = require('cookie-session');
 
 const app = express();
 app.use(cookieParser());
@@ -21,14 +21,12 @@ app.use(express.json());
 dotenv.config({ path: './config/configurations.env' });
 app.use(
   session({
-    secret: 'cats',
-    resave: false,
-    saveUninitialized: true,
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: ['dnndndndnd'],
   })
 );
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 // app.use(cors());
 

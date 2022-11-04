@@ -21,9 +21,12 @@ router.get(
 router.get(
   '/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: '/protected',
-    failureRedirect: '/auth/google/failure',
-  })
+    // successRedirect: '/protected',
+    // failureRedirect: '/auth/google/failure',
+  }),
+  (req, res) => {
+    res.redirect('http://localhost:3000/product');
+  }
 );
 
 router.get('/protected', isLoggedIn, (req, res) => {
@@ -38,13 +41,13 @@ router.get('/protected', isLoggedIn, (req, res) => {
 //     res.redirect('/');
 //   });
 router.get('/logout', (req, res) => {
-  // req.logout(() => {
-  //   res.redirect('/');
-  // });
+  req.logout(() => {
+    res.redirect('/');
+  });
 
-  req.session.destroy();
-  // res.redirect('/');
-  res.send('Goodbye!');
+  // req.session.destroy();
+  // // res.redirect('/');
+  // res.send('Goodbye!');
 });
 
 router.get('/auth/google/failure', (req, res) => {
