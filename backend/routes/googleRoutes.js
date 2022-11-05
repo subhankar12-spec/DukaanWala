@@ -4,6 +4,7 @@ const passport = require('passport');
 const session = require('cookie-session');
 const router = express.Router();
 require('../utils/googleAuth');
+const ErrorHandler = require('../utils/errorHandler');
 
 function isLoggedIn(req, res, next) {
   if (!req.user) {
@@ -31,18 +32,18 @@ router.get(
     failureRedirect: '/auth/google/failure',
   }),
   (req, res) => {
-    res.redirect('/login/success');
+    res.redirect('http://localhost:3000');
   }
 );
 //profile
-router.get('/login/success', isLoggedIn, (req, res) => {
+router.get('/login/success', (req, res, next) => {
   if (req.user) {
     res.status(200).json({
       success: true,
       message: 'Profile Fetched',
       user: req.user,
     });
-  } else return next(new ErrorHandler('Please Enter Email & Password', 400));
+  } else return next(new ErrorHandler('Login', 400));
 });
 //protected routes
 router.get('/protected', isLoggedIn, (req, res) => {

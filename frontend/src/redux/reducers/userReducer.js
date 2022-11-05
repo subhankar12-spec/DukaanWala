@@ -10,6 +10,9 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
+  GOOGLE_LOGIN_REQUEST,
+  GOOGLE_LOGIN_FAIL,
+  GOOGLE_LOGIN_SUCCESS,
 } from '../constants/userConstants';
 
 export const userReducer = (state = { user: {} }, action) => {
@@ -17,6 +20,7 @@ export const userReducer = (state = { user: {} }, action) => {
     case LOGIN_REQUEST:
     case REGISTER_USER_REQUEST:
     case LOAD_USER_REQUEST:
+    case GOOGLE_LOGIN_REQUEST:
       return {
         loading: true,
         isAuthenticated: false,
@@ -24,6 +28,7 @@ export const userReducer = (state = { user: {} }, action) => {
     case LOGIN_SUCCESS:
     case REGISTER_USER_SUCCESS:
     case LOAD_USER_SUCCESS:
+    case GOOGLE_LOGIN_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -39,6 +44,7 @@ export const userReducer = (state = { user: {} }, action) => {
       };
     case LOGIN_FAIL:
     case REGISTER_USER_FAIL:
+    case GOOGLE_LOGIN_FAIL:
       return {
         ...state,
         loading: false,

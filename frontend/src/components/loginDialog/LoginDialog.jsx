@@ -8,7 +8,11 @@ import {
   styled,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, register } from '../../redux/actions/userActions';
+import {
+  login,
+  register,
+  loadOAuthUser,
+} from '../../redux/actions/userActions';
 import { useNavigate } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
 
@@ -62,6 +66,10 @@ const LoginDialog = ({ open, setOpen }) => {
     setTimeout(() => {
       toggleSignUp(true);
     }, 500);
+  };
+  const registerUsingGoogle = () => {
+    console.log('Triggered');
+    dispatch(loadOAuthUser());
   };
   const toggle = () => toggleSignUp(false);
   // useEffect(() => {
@@ -188,6 +196,7 @@ const LoginDialog = ({ open, setOpen }) => {
               variant="text"
               color="inherit"
               sx={{ textTransform: 'none' }}
+              onClick={() => registerUsingGoogle()}
               disableRipple
             >
               <GoogleButton />

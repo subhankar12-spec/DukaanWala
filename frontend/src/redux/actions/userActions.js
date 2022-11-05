@@ -10,6 +10,9 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
+  GOOGLE_LOGIN_REQUEST,
+  GOOGLE_LOGIN_FAIL,
+  GOOGLE_LOGIN_SUCCESS,
 } from '../constants/userConstants';
 import axios from 'axios';
 
@@ -39,7 +42,7 @@ export const login = (email, password) => async (dispatch) => {
 export const register = (name, email, password) => async (dispatch) => {
   try {
     dispatch({ type: REGISTER_USER_REQUEST });
-    console.log(name,email,password)
+    console.log(name, email, password);
 
     const config = { headers: { 'Content-Type': 'application/json' } };
 
@@ -62,6 +65,7 @@ export const register = (name, email, password) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     await axios.get(`/logout`);
+    await axios.get(`/glogout`);
 
     dispatch({ type: LOGOUT_SUCCESS });
   } catch (error) {
@@ -79,5 +83,18 @@ export const loadUser = () => async (dispatch) => {
     dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
   } catch (error) {
     dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
+  }
+};
+
+// Load OAuth User
+export const loadOAuthUser = () => async (dispatch) => {
+  try {
+    dispatch({ type: GOOGLE_LOGIN_REQUEST });
+
+    const { data } = await axios.get(`/login/success`);
+
+    dispatch({ type: GOOGLE_LOGIN_SUCCESS, payload: data.user });
+  } catch (error) {
+    dispatch({ type: GOOGLE_LOGIN_FAIL, payload: error.response.data.message });
   }
 };

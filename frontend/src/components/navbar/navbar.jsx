@@ -14,13 +14,13 @@ import {
 import LoginDialog from '../loginDialog/LoginDialog';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../redux/actions/userActions';
-import { loadUser } from '../../redux/actions/userActions';
-
+import { loadUser, loadOAuthUser } from '../../redux/actions/userActions';
 
 const Navbar = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadUser());
+    dispatch(loadOAuthUser());
   }, []);
   const [value, setValue] = React.useState('one');
 
