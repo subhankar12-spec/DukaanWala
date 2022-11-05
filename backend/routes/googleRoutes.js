@@ -1,36 +1,52 @@
 //Passport o-auth20
 const express = require('express');
 const passport = require('passport');
-const session = require('express-session');
+const session = require('cookie-session');
 const router = express.Router();
 require('../utils/googleAuth');
 
 function isLoggedIn(req, res, next) {
-  req.user ? next() : res.sendStatus(401);
+  if (!req.user) {
+    res.redirect('/auth/google');
+  } else {
+    next();
+  }
 }
 
-router.get('/auth', (req, res) => {
-  res.send('<a href="/auth/google">Authenticate with Google</a>');
-});
+// router.get('/auth', (req, res) => {
+//   res.send('<a href="/auth/google">Authenticate with Google</a>');
+// });
 
+//main route
 router.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['email', 'profile'] })
 );
 
+//callback
 router.get(
   '/auth/google/callback',
   passport.authenticate('google', {
     // successRedirect: '/protected',
-    // failureRedirect: '/auth/google/failure',
+    failureRedirect: '/auth/google/failure',
   }),
   (req, res) => {
-    res.redirect('http://localhost:3000/product');
+    res.redirect('/login/success');
   }
 );
-
+//profile
+router.get('/login/success', isLoggedIn, (req, res) => {
+  if (req.user) {
+    res.status(200).json({
+      success: true,
+      message: 'Profile Fetched',
+      user: req.user,
+    });
+  } else return next(new ErrorHandler('Please Enter Email & Password', 400));
+});
+//protected routes
 router.get('/protected', isLoggedIn, (req, res) => {
-  res.send(`Hello ${req.user.displayName}`);
+  res.send(`Hello ${req.user.name}`);
 });
 
 // app.get('/logout', (req, res) => {
@@ -40,14 +56,14 @@ router.get('/protected', isLoggedIn, (req, res) => {
 //     }
 //     res.redirect('/');
 //   });
-router.get('/logout', (req, res) => {
-  req.logout(() => {
-    res.redirect('/');
-  });
+
+//logout
+router.get('/glogout', (req, res) => {
+  req.logOut();
+  // res.redirect('/auth/google/');
 
   // req.session.destroy();
-  // // res.redirect('/');
-  // res.send('Goodbye!');
+  res.send('Goodbye!');
 });
 
 router.get('/auth/google/failure', (req, res) => {
