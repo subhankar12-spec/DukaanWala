@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export const getProducts = () => async (dispatch) => {
   try {
+    dispatch({ type: actionTypes.GET_PRODUCT_DETAILS_REQUEST });
     const { data } = await axios.get(`/products`);
     dispatch({ type: actionTypes.GET_PRODUCTS_SUCCESS, payload: data });
   } catch (error) {

@@ -1,0 +1,11 @@
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow-x: hidden;
+  /* margin-top: 30px; */
+}
+
+.featureText {
+  margin-top: 20px;
+}

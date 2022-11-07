@@ -1,0 +1,13 @@
+.mainDiv {
+  background-color: rgb(63, 58, 58);
+  height: 11.5vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.mainText {
+  color: white;
+  margin-top: 20px;
+}
+

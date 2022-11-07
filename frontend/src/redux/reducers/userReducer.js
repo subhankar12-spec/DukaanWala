@@ -20,19 +20,29 @@ export const userReducer = (state = { user: {} }, action) => {
     case LOGIN_REQUEST:
     case REGISTER_USER_REQUEST:
     case LOAD_USER_REQUEST:
-    case GOOGLE_LOGIN_REQUEST:
       return {
         loading: true,
         isAuthenticated: false,
       };
+    case GOOGLE_LOGIN_REQUEST:
+      return {
+        Oloading: true,
+        isOAuthenticated: false,
+      };
     case LOGIN_SUCCESS:
     case REGISTER_USER_SUCCESS:
     case LOAD_USER_SUCCESS:
-    case GOOGLE_LOGIN_SUCCESS:
       return {
         ...state,
         loading: false,
         isAuthenticated: true,
+        user: action.payload,
+      };
+    case GOOGLE_LOGIN_SUCCESS:
+      return {
+        ...state,
+        Oloading: false,
+        isOAuthenticated: true,
         user: action.payload,
       };
 
@@ -47,8 +57,8 @@ export const userReducer = (state = { user: {} }, action) => {
     case GOOGLE_LOGIN_FAIL:
       return {
         ...state,
-        loading: false,
-        isAuthenticated: false,
+        Oloading: false,
+        isOAuthenticated: false,
         user: null,
         error: action.payload,
       };

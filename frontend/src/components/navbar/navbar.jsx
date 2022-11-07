@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import logo from '../../assets/Dukaanwala-logos_black.png';
-import {
-  AppBar,
-  Toolbar,
-  Box,
-  Typography,
-  IconButton,
-  Drawer,
-  List,
-  styled,
-  Button,
-} from '@mui/material';
+import Spinner from '../spinner/Spinner';
 import LoginDialog from '../loginDialog/LoginDialog';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../redux/actions/userActions';
 import { loadUser, loadOAuthUser } from '../../redux/actions/userActions';
+import Navbar from 'react-bootstrap/Navbar';
+import { LinkContainer } from 'react-router-bootstrap';
+import './navbar.css';
+import Button from 'react-bootstrap/Button';
+import Nav from 'react-bootstrap/Nav';
+import { Link } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
 
-const Navbar = () => {
+const NavBar = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadUser());
@@ -27,13 +23,18 @@ const Navbar = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const [open, setOpen] = useState(false);
+  const [show, setShow] = useState(false);
 
-  const { error, loading, isAuthenticated, user } = useSelector(
-    (state) => state.user
-  );
+  const {
+    error,
+    loading,
+    isAuthenticated,
+    isOloading,
+    isOAuthenticated,
+    user,
+  } = useSelector((state) => state.user);
   const openDialog = () => {
-    setOpen(true);
+    setShow(true);
   };
 
   const logoutHandler = () => {
@@ -41,34 +42,61 @@ const Navbar = () => {
     // localStorage.removeItem('user');
   };
   return (
-    <Box>
-      <AppBar sx={{ background: '#E0E0E0', height: '100px' }}>
-        <Toolbar>
-          <img src={logo} alt="logo" style={{ width: 300, marginTop: -50 }} />
-          {isAuthenticated ? (
-            <Button
-              variant="contained"
-              color="warning"
-              sx={{ ml: 100 }}
-              onClick={() => logoutHandler()}
-            >
-              Logout
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              color="warning"
-              sx={{ ml: 100 }}
-              onClick={() => openDialog()}
-            >
-              Login
-            </Button>
-          )}
-          <LoginDialog open={open} setOpen={setOpen} />
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <>
+      <Navbar bg="dark" variant="dark">
+        <LinkContainer to="/">
+          <Navbar.Brand className="nav">Dukaanwala</Navbar.Brand>
+        </LinkContainer>
+
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto w-100 justify-content-end">
+            <Form className="d-flex">
+              <Form.Control
+                type="search"
+                placeholder="Search"
+                className="me-2"
+                aria-label="Search"
+              />
+              <Button size="sm" variant="outline-success button">
+                Search
+              </Button>
+            </Form>
+            <Link to="/cart" className="nav-link cart">
+              Cart
+            </Link>
+
+            {false ? (
+              <Spinner />
+            ) : (
+              <>
+                {isAuthenticated || isOAuthenticated ? (
+                  <Button
+                    variant="warning"
+                    size="sm"
+                    className="button"
+                    onClick={() => logoutHandler()}
+                  >
+                    Logout
+                  </Button>
+                ) : (
+                  <Button
+                    variant="warning"
+                    size="sm"
+                    className="button float-right"
+                    onClick={() => openDialog()}
+                  >
+                    Login
+                  </Button>
+                )}
+                <LoginDialog show={show} setOpen={setShow} />
+              </>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    </>
   );
 };
 
-export default Navbar;
+export default NavBar;

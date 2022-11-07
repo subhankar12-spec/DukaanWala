@@ -15,6 +15,7 @@ import {
 } from '../../redux/actions/userActions';
 import { useNavigate } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
+import Modal from 'react-bootstrap/Modal';
 
 const Text = styled(Typography)`
   color: #878787;
@@ -30,7 +31,7 @@ const CreateAccount = styled(Typography)`
   cursor: pointer;
 `;
 
-const LoginDialog = ({ open, setOpen }) => {
+const LoginDialog = ({ show, setOpen }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   //login
@@ -86,7 +87,12 @@ const LoginDialog = ({ open, setOpen }) => {
     // navigate('/auth/google');
   };
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Modal
+      show={show}
+      onHide={handleClose}
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
       {signUp ? (
         <form>
           <Box
@@ -204,7 +210,7 @@ const LoginDialog = ({ open, setOpen }) => {
           </Box>
         </form>
       )}
-    </Dialog>
+    </Modal>
   );
 };
 
