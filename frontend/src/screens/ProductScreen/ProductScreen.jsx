@@ -19,6 +19,8 @@ const ProductScreen = () => {
     dispatch(getProductDetails(id));
   }, []);
 
+  const addToCartHandler = () => {};
+
   return (
     // <div>Hello</div>
     <div>
@@ -93,8 +95,8 @@ const ProductScreen = () => {
                         </Col> */}
                       </Row>
                     </ListGroup.Item>
-
-                    {/* {product.countInStock > 0 && (
+                    
+                    {product.Stock > 0 && (
                       <ListGroup.Item>
                         <div className="d-grid">
                           <Button onClick={addToCartHandler} variant="primary">
@@ -102,7 +104,7 @@ const ProductScreen = () => {
                           </Button>
                         </div>
                       </ListGroup.Item>
-                    )} */}
+                    )}
                   </ListGroup>
                 </Card.Body>
               </Card>
