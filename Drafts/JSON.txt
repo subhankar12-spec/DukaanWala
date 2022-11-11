@@ -33,3 +33,34 @@ Login
 }
 
 https://github.com/safak/youtube/tree/react-social-login
+
+
+order 
+======
+{
+    "itemPrice": 200,
+    "taxPrice": 123,
+    "shippingPrice": 100,
+    "totalPrice": 336,
+    "orderItems": [
+        {
+            "product": "6353b92aa4b5aefe9116756f",
+            "name": "Lap",
+            "price": 1200,
+            "quantity": 3
+        }
+    ],
+    "shippingInfo": {
+        
+            "address": "619 LA",
+            "city": "LA",
+            "state": "California",
+            "country": "USA",
+            "pinCode": 77777,
+            "phoneNo": 636354353
+    },
+    "paymentInfo": {
+        "id": "sampleID",
+        "status": "success"
+    }
+}

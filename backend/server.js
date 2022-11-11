@@ -16,6 +16,7 @@ app.use(cookieParser());
 const products = require('./routes/productRoutes');
 const users = require('./routes/userRoutes');
 const googleRoutes = require('./routes/googleRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 
 app.use(express.json());
 dotenv.config({ path: './config/configurations.env' });
@@ -39,5 +40,6 @@ dbConnection();
 app.use('/', products);
 app.use('/', users);
 app.use('/', googleRoutes);
+app.use('/', orderRoutes);
 
 app.use(errorMiddleware);
