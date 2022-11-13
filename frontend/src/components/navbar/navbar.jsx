@@ -11,6 +11,7 @@ import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
+import Badge from 'react-bootstrap/Badge';
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const NavBar = () => {
     isOAuthenticated,
     user,
   } = useSelector((state) => state.user);
+  const { cartItems } = useSelector((state) => state.cart);
   const openDialog = () => {
     setShow(true);
   };
@@ -64,6 +66,12 @@ const NavBar = () => {
             </Form>
             <Link to="/cart" className="nav-link cart">
               Cart
+              {cartItems.length > 0 && (
+                <Badge pill bg="danger">
+                  {/* {cartItems.reduce((a, c) => a + c.quantity, 0)} */}
+                  {cartItems.length}
+                </Badge>
+              )}
             </Link>
 
             {false ? (

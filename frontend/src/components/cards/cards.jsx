@@ -2,11 +2,18 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import './cards.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { addItemsToCart } from '../../redux/actions/cartActions';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Cards = ({ product }) => {
-  const addToCartHandler = () => {};
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const addToCartHandler = (product) => {
+    dispatch(addItemsToCart(product._id, 1));
+    navigate('/cart');
+  };
   return (
     <div className="cardDiv">
       <Card>
