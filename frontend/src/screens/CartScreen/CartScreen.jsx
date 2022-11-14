@@ -5,13 +5,14 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
   addItemsToCart,
   removeItemsFromCart,
 } from '../../redux/actions/cartActions';
 const CartScreen = () => {
+  const navigate = useNavigate();
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const updateCartHandler = async (item, quantity) => {
@@ -33,7 +34,7 @@ const CartScreen = () => {
   };
 
   const checkoutHandler = () => {
-    // navigate('/signin?redirect=/shipping');
+    navigate('/checkout');
   };
   return (
     <div>
@@ -111,7 +112,7 @@ const CartScreen = () => {
                     <Button
                       type="button"
                       variant="primary"
-                      href="/checkout"
+                      // href="/checkout"
                       onClick={checkoutHandler}
                       disabled={cartItems.length === 0}
                     >

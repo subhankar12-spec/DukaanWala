@@ -6,6 +6,9 @@ import HomeScreen from './screens/HomeScreen/HomeScreen';
 import ProductScreen from './screens/ProductScreen/ProductScreen';
 import CartScreen from './screens/CartScreen/CartScreen';
 import CheckoutScreen from './screens/CheckoutScreen/CheckoutScreen';
+import ShippingScreen from './screens/ShippingScreen/ShippingScreen';
+import ProtectedRoute from './components/protectedRoute';
+import OrderScreen from './screens/OrderScreen/OrderScreen';
 
 function App() {
   return (
@@ -15,7 +18,22 @@ function App() {
         <Route path="/" element={<HomeScreen />} />
         <Route path="/product/:id" element={<ProductScreen />} />
         <Route path="/cart" element={<CartScreen />} />
-        <Route path="/checkout" element={<CheckoutScreen />} />
+        <Route
+          path="/checkout"
+          element={
+            // <ProtectedRoute>
+            <ShippingScreen />
+            //</ProtectedRoute>
+          }
+        />
+        <Route
+          path="/order"
+          element={
+            // <ProtectedRoute>
+            <OrderScreen />
+            //</ProtectedRoute>
+          }
+        />
       </Routes>
       <Footer />
     </BrowserRouter>
