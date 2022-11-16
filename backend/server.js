@@ -39,8 +39,6 @@ app.listen(process.env.PORT, () => {
 
 dbConnection();
 
-
-
 app.use('/', products);
 app.use('/', users);
 app.use('/', googleRoutes);

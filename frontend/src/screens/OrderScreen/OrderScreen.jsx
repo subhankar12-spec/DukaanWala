@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
@@ -12,9 +12,11 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 const OrderScreen = () => {
+  const [orderAmount, setOrderAmount] = useState(500);
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
   const { cartItems, shippingInfo } = cart;
+  //payment
   const paymentHandler = async (amount) => {
     const script = document.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
@@ -22,41 +24,50 @@ const OrderScreen = () => {
       alert('Razorpay SDK failed to load. Are you online?');
     };
     script.onload = async () => {
-      console.log(window);
-      // navigate('/payment');
-      const {
-        data: { key },
-      } = await axios.get('/getkey');
+      try {
+        const result = await axios.post('/create-order', {
+          amount: orderAmount + '00',
+        });
 
-      // const {
-      //   data: { order },
-      // } = await axios.post('http://localhost:4000/checkout', {
-      //   amount,
-      // });
+        const { amount, id: order_id, currency } = result.data;
+        const {
+          data: { key: razorpayKey },
+        } = await axios.get('/get-razorpay-key');
+        console.log(razorpayKey);
+        const options = {
+          key: razorpayKey,
+          amount: amount.toString(),
+          currency: currency,
+          name: 'example name',
+          description: 'example transaction',
+          order_id: order_id,
+          handler: async function (response) {
+            const result = await axios.post('/pay-order', {
+              amount: amount,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpayOrderId: response.razorpay_order_id,
+              razorpaySignature: response.razorpay_signature,
+            });
+            alert(result.data.msg);
+          },
+          prefill: {
+            name: 'example name',
+            email: 'email@example.com',
+            contact: '111111',
+          },
+          notes: {
+            address: 'example address',
+          },
+          theme: {
+            color: '#80c0f0',
+          },
+        };
 
-      const options = {
-        key,
-        amount: amount,
-        currency: 'INR',
-        name: 'RazorPay',
-        description: 'Tutorial of RazorPay',
-        image: 'https://avatars.githubusercontent.com/u/25058652?v=4',
-        // order_id: 2,
-        callback_url: 'http://localhost:4000/paymentverification',
-        prefill: {
-          name: 'Gaurav Kumar',
-          email: 'gaurav.kumar@example.com',
-          contact: '9999999999',
-        },
-        notes: {
-          address: 'Razorpay Corporate Office',
-        },
-        theme: {
-          color: '#121212',
-        },
-      };
-      const razor = new window.Razorpay(options);
-      razor.open();
+        const paymentObject = new window.Razorpay(options);
+        paymentObject.open();
+      } catch (err) {
+        alert(err);
+      }
     };
     document.body.appendChild(script);
   };

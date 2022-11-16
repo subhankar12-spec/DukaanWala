@@ -10,12 +10,12 @@ const {
 
 const router = express.Router();
 
-router.route('/checkout').post(checkout);
+router.route('/create-order').post(checkout);
 
-router.route('/paymentverification').post(paymentVerification);
+router.route('/pay-order').post(paymentVerification);
 
 router
-  .route('/getkey')
+  .route('/get-razorpay-key')
   .get((req, res) =>
     res.status(200).json({ key: process.env.RAZORPAY_API_KEY })
   );
