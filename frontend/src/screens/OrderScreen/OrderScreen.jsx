@@ -12,9 +12,54 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 const OrderScreen = () => {
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
   const { cartItems, shippingInfo } = cart;
-  const placeOrderHandler = () => {};
+  const paymentHandler = async (amount) => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onerror = () => {
+      alert('Razorpay SDK failed to load. Are you online?');
+    };
+    script.onload = async () => {
+      console.log(window);
+      // navigate('/payment');
+      const {
+        data: { key },
+      } = await axios.get('/getkey');
+
+      // const {
+      //   data: { order },
+      // } = await axios.post('http://localhost:4000/checkout', {
+      //   amount,
+      // });
+
+      const options = {
+        key,
+        amount: amount,
+        currency: 'INR',
+        name: 'RazorPay',
+        description: 'Tutorial of RazorPay',
+        image: 'https://avatars.githubusercontent.com/u/25058652?v=4',
+        // order_id: 2,
+        callback_url: 'http://localhost:4000/paymentverification',
+        prefill: {
+          name: 'Gaurav Kumar',
+          email: 'gaurav.kumar@example.com',
+          contact: '9999999999',
+        },
+        notes: {
+          address: 'Razorpay Corporate Office',
+        },
+        theme: {
+          color: '#121212',
+        },
+      };
+      const razor = new window.Razorpay(options);
+      razor.open();
+    };
+    document.body.appendChild(script);
+  };
   console.log(cart);
   const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
   cart.itemsPrice = round2(
@@ -23,6 +68,10 @@ const OrderScreen = () => {
   cart.shippingPrice = cart.itemsPrice > 100 ? round2(0) : round2(10);
   cart.taxPrice = round2(0.15 * cart.itemsPrice);
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
+
+  function onError(err) {
+    // toast.error(getError(err));
+  }
 
   return (
     <div>
@@ -120,10 +169,10 @@ const OrderScreen = () => {
                   <div className="d-grid">
                     <Button
                       type="button"
-                      onClick={placeOrderHandler}
+                      onClick={() => paymentHandler(500)}
                       disabled={cartItems.length === 0}
                     >
-                      Place Order
+                      Proceed To Payment
                     </Button>
                   </div>
                   {/* {loading && <LoadingBox></LoadingBox>} */}

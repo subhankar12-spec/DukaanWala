@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('cookie-session');
+const Razorpay = require('razorpay');
 
 const app = express();
 app.use(cookieParser());
@@ -17,6 +18,7 @@ const products = require('./routes/productRoutes');
 const users = require('./routes/userRoutes');
 const googleRoutes = require('./routes/googleRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 
 app.use(express.json());
 dotenv.config({ path: './config/configurations.env' });
@@ -37,9 +39,13 @@ app.listen(process.env.PORT, () => {
 
 dbConnection();
 
+
+
 app.use('/', products);
 app.use('/', users);
 app.use('/', googleRoutes);
+app.use('/', googleRoutes);
 app.use('/', orderRoutes);
+app.use('/', paymentRoutes);
 
 app.use(errorMiddleware);
