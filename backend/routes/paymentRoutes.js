@@ -7,12 +7,13 @@ const {
   checkout,
   paymentVerification,
 } = require('../controllers/paymentController.js');
+const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
 
 const router = express.Router();
 
-router.route('/create-order').post(checkout);
+router.route('/create-order').post(isAuthenticatedUser, checkout);
 
-router.route('/pay-order').post(paymentVerification);
+router.route('/pay-order').post(isAuthenticatedUser, paymentVerification);
 
 router
   .route('/get-razorpay-key')

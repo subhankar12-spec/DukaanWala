@@ -3,6 +3,8 @@ const Payment = require('../models/paymentModel');
 const Razorpay = require('razorpay');
 const dotenv = require('dotenv');
 dotenv.config({ path: './config/configurations.env' });
+const Order = require('../models/orderModel');
+const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 
 module.exports.checkout = async (req, res) => {
   try {
@@ -29,20 +31,37 @@ const instance = new Razorpay({
 
 module.exports.paymentVerification = async (req, res) => {
   try {
-    const { amount, razorpayPaymentId, razorpayOrderId, razorpaySignature } =
-      req.body;
-    const newOrder = Order({
-      isPaid: true,
-      amount: amount,
+    const {
+      orderItems,
+      shippingInfo,
+      amount,
+      razorpayPaymentId,
+      razorpayOrderId,
+      razorpaySignature,
+    } = req.body;
+
+    const order = await Order.create({
+      orderItems,
+      shippingInfo,
+      user: req.user._id,
+      // paymentInfo,
+      // itemsPrice,
+      // taxPrice,
+      // shippingPrice,
+      amount: amount / 100,
+      // paidAt: Date.now(),
+
       razorpay: {
         orderId: razorpayOrderId,
         paymentId: razorpayPaymentId,
         signature: razorpaySignature,
       },
     });
-    await newOrder.save();
-    res.send({
+
+    res.status(201).json({
       msg: 'Payment was successfull',
+      success: true,
+      order,
     });
   } catch (error) {
     console.log(error);

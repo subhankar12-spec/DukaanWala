@@ -20,7 +20,7 @@ const orderSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-    pinCode: {
+    postalCode: {
       type: Number,
       required: true,
     },
@@ -43,18 +43,18 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
-      //   image: {
-      //     type: String,
-      //     required: true,
+      image: {
+        type: String,
+        required: true,
+      },
+      // images: [
+      //   {
+      //     url: {
+      //       type: String,
+      //       required: false,
+      //     },
       //   },
-      images: [
-        {
-          url: {
-            type: String,
-            required: false,
-          },
-        },
-      ],
+      // ],
       product: {
         type: mongoose.Schema.ObjectId,
         ref: 'Product',
@@ -67,49 +67,54 @@ const orderSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
-  paymentInfo: {
-    id: {
-      type: String,
-      required: true,
-    },
-    status: {
-      type: String,
-      required: true,
-    },
-  },
-  paidAt: {
-    type: Date,
-    required: true,
-  },
-  itemsPrice: {
+  // paymentInfo: {
+  //   id: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   status: {
+  //     type: String,
+  //     required: true,
+  //   },
+  // },
+  // paidAt: {
+  //   type: Date,
+  //   required: true,
+  // },
+  // itemsPrice: {
+  //   type: Number,
+  //   required: true,
+  //   default: 0,
+  // },
+  // taxPrice: {
+  //   type: Number,
+  //   required: true,
+  //   default: 0,
+  // },
+  // shippingPrice: {
+  //   type: Number,
+  //   required: true,
+  //   default: 0,
+  // },
+  amount: {
     type: Number,
     required: true,
     default: 0,
   },
-  taxPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  shippingPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  totalPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  orderStatus: {
-    type: String,
-    required: true,
-    default: 'Processing',
-  },
-  deliveredAt: Date,
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  // orderStatus: {
+  //   type: String,
+  //   required: true,
+  //   default: 'Processing',
+  // },
+  // deliveredAt: Date,
+  // createdAt: {
+  //   type: Date,
+  //   default: Date.now,
+  // },
+  razorpay: {
+    orderId: String,
+    paymentId: String,
+    signature: String,
   },
 });
 

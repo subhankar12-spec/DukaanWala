@@ -19,6 +19,7 @@ const ShippingScreen = () => {
     phoneNo: shippingInfo.phoneNo,
     address: shippingInfo.address,
     city: shippingInfo.city,
+    state: shippingInfo.state,
     postalCode: shippingInfo.postalCode,
     country: shippingInfo.country,
   };
@@ -108,6 +109,16 @@ const ShippingScreen = () => {
             <Form.Control
               name="city"
               value={shippingDetails.city}
+              onChange={(e) => onChangeFunc(e)}
+              required
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="city">
+            <Form.Label>State</Form.Label>
+            <Form.Control
+              name="state"
+              value={shippingDetails.state}
               onChange={(e) => onChangeFunc(e)}
               required
             />

@@ -12,21 +12,27 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 const OrderScreen = () => {
-  const [orderAmount, setOrderAmount] = useState(500);
+  const [orderAmounts, setOrderAmount] = useState(1000);
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.user);
   const { cartItems, shippingInfo } = cart;
+  var orderAmount = cart.totalPrice;
   //payment
   const paymentHandler = async (amount) => {
+    console.log(orderAmount);
     const script = document.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     script.onerror = () => {
       alert('Razorpay SDK failed to load. Are you online?');
     };
+
     script.onload = async () => {
       try {
+        const orderAmount = cart.totalPrice * 100;
+        console.log('orderAmount is' + orderAmount);
         const result = await axios.post('/create-order', {
-          amount: orderAmount + '00',
+          amount: orderAmount,
         });
 
         const { amount, id: order_id, currency } = result.data;
@@ -38,11 +44,14 @@ const OrderScreen = () => {
           key: razorpayKey,
           amount: amount.toString(),
           currency: currency,
-          name: 'example name',
+          name: 'Dukaanwala',
           description: 'example transaction',
           order_id: order_id,
           handler: async function (response) {
             const result = await axios.post('/pay-order', {
+              user: user,
+              orderItems: cartItems,
+              shippingInfo: shippingInfo,
               amount: amount,
               razorpayPaymentId: response.razorpay_payment_id,
               razorpayOrderId: response.razorpay_order_id,
