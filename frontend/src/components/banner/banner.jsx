@@ -1,4 +1,4 @@
-import { styled } from '@mui/material';
+import { styled, Box } from '@mui/material';
 
 import { bannerData } from '../../constants/data';
 import Carousel from 'react-multi-carousel';
@@ -29,7 +29,7 @@ const Image = styled('img')(({ theme }) => ({
 
 const Banner = () => {
   return (
-    <>
+    <Box sx={{ mt: 0 }}>
       <Carousel
         swipeable={false}
         draggable={false}
@@ -48,7 +48,7 @@ const Banner = () => {
           <Image src={image.url} alt="banner" id={image.id} />
         ))}
       </Carousel>
-    </>
+    </Box>
   );
 };
 

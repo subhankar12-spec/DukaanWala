@@ -1,8 +1,14 @@
-export const GET_PRODUCTS_SUCCESS = 'getProductsSuccess'
-export const GET_PRODUCTS_FAIL = 'getProductsFail'
+export const ALL_PRODUCT_REQUEST = 'ALL_PRODUCT_REQUEST';
+export const ALL_PRODUCT_SUCCESS = 'ALL_PRODUCT_SUCCESS';
+export const ALL_PRODUCT_FAIL = 'ALL_PRODUCT_FAIL';
 
+export const PRODUCT_DETAILS_REQUEST = 'PRODUCT_DETAILS_REQUEST';
+export const PRODUCT_DETAILS_SUCCESS = 'PRODUCT_DETAILS_SUCCESS';
+export const PRODUCT_DETAILS_FAIL = 'PRODUCT_DETAILS_FAIL';
 
-export const GET_PRODUCT_DETAILS_REQUEST = 'getProductDetailsRequest'
-export const GET_PRODUCT_DETAILS_SUCCESS = 'getProductDetailSuccess'
-export const GET_PRODUCT_DETAILS_FAIL = 'getProductDetailFail'
-export const GET_PRODUCT_DETAILS_RESET = 'getProductDetailReset'
+export const NEW_PRODUCT_REQUEST = 'NEW_PRODUCT_REQUEST';
+export const NEW_PRODUCT_SUCCESS = 'NEW_PRODUCT_SUCCESS';
+export const NEW_PRODUCT_RESET = 'NEW_PRODUCT_RESET';
+export const NEW_PRODUCT_FAIL = 'NEW_PRODUCT_FAIL';
+
+export const CLEAR_PRODUCTS = 'CLEAR_PRODUCTS';

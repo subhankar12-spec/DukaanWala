@@ -8,12 +8,14 @@ import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
+import { removeItemsFromCart } from '../../redux/actions/cartActions';
 
 import { useSelector, useDispatch } from 'react-redux';
 
 const OrderScreen = () => {
   const [orderAmounts, setOrderAmount] = useState(1000);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
   const { cartItems, shippingInfo } = cart;
@@ -57,7 +59,11 @@ const OrderScreen = () => {
               razorpayOrderId: response.razorpay_order_id,
               razorpaySignature: response.razorpay_signature,
             });
+            cartItems.map((item) => {
+              dispatch(removeItemsFromCart(item.product));
+            });
             alert(result.data.msg);
+            navigate('/orders');
           },
           prefill: {
             name: 'example name',
@@ -74,6 +80,9 @@ const OrderScreen = () => {
 
         const paymentObject = new window.Razorpay(options);
         paymentObject.open();
+        // cartItems.map((item) => {
+        //   dispatch(removeItemsFromCart(item.product));
+        // });
       } catch (err) {
         alert(err);
       }

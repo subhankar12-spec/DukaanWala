@@ -4,14 +4,29 @@ import LoginDialog from '../loginDialog/LoginDialog';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../redux/actions/userActions';
 import { loadUser, loadOAuthUser } from '../../redux/actions/userActions';
-import Navbar from 'react-bootstrap/Navbar';
-import { LinkContainer } from 'react-router-bootstrap';
-import './navbar.css';
-import Button from 'react-bootstrap/Button';
-import Nav from 'react-bootstrap/Nav';
-import { Link } from 'react-router-dom';
-import Form from 'react-bootstrap/Form';
-import Badge from 'react-bootstrap/Badge';
+
+import {
+  AppBar,
+  Toolbar,
+  styled,
+  Box,
+  Typography,
+  Stack,
+  IconButton,
+  Badge,
+  Paper,
+  InputBase,
+  Divider,
+  Button,
+} from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { NavLink } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
+
+const StyledToolbar = styled(Toolbar)({
+  display: 'flex',
+  justifyContent: 'space-between',
+});
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -45,7 +60,81 @@ const NavBar = () => {
   };
   return (
     <>
-      <Navbar bg="dark" variant="dark">
+      <AppBar position="sticky">
+        <StyledToolbar>
+          <NavLink to="/" style={{ textDecoration: 'none', color: 'unset' }}>
+            <Box>
+              <Typography
+                variant="h4"
+                sx={{
+                  fontSize: {
+                    lg: 30,
+                    md: 25,
+                    sm: 20,
+                    xs: 20,
+                  },
+                  ml: 1,
+                }}
+              >
+                Dukaanwala
+              </Typography>
+            </Box>
+          </NavLink>
+
+          {/* <Paper
+            component="form"
+            sx={{
+              p: '2px 4px',
+              display: 'flex',
+              alignItems: 'center',
+              width: 600,
+            }}
+          >
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search for products.."
+              inputProps={{ 'aria-label': 'search google maps' }}
+            />
+            <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          </Paper> */}
+          <Stack direction="row" gap={2}>
+            <NavLink
+              to="/cart"
+              style={{ textDecoration: 'none', color: 'unset' }}
+            >
+              <IconButton>
+                {cartItems.length >= 0 && (
+                  <Badge badgeContent={cartItems.length} color="secondary">
+                    <ShoppingCartIcon />
+                  </Badge>
+                )}
+              </IconButton>
+            </NavLink>
+            {isAuthenticated || isOAuthenticated ? (
+              <Button
+                variant="contained"
+                size="sm"
+                onClick={() => logoutHandler()}
+              >
+                Logout
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                size="sm"
+                onClick={() => openDialog()}
+              >
+                Login
+              </Button>
+            )}
+            <LoginDialog show={show} setOpen={setShow} />
+          </Stack>
+        </StyledToolbar>
+      </AppBar>
+      {/* <Navbar bg="dark" variant="dark">
         <LinkContainer to="/">
           <Navbar.Brand className="nav">Dukaanwala</Navbar.Brand>
         </LinkContainer>
@@ -68,7 +157,7 @@ const NavBar = () => {
               Cart
               {cartItems.length > 0 && (
                 <Badge pill bg="danger">
-                  {/* {cartItems.reduce((a, c) => a + c.quantity, 0)} */}
+                  {/* {cartItems.reduce((a, c) => a + c.quantity, 0)} 
                   {cartItems.length}
                 </Badge>
               )}
@@ -102,7 +191,7 @@ const NavBar = () => {
             )}
           </Nav>
         </Navbar.Collapse>
-      </Navbar>
+      </Navbar> */}
     </>
   );
 };

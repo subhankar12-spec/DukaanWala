@@ -6,6 +6,7 @@ import Spinner from '../../components/spinner/Spinner';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './HomeScreen.css';
+import { Box, Typography, Grid } from '@mui/material';
 
 import { useSelector, useDispatch } from 'react-redux'; // hooks
 import { getProducts as getAllProducts } from '../../redux/actions/productActions';
@@ -27,15 +28,24 @@ const HomeScreen = () => {
       ) : (
         <>
           <Banner />
-          <div>
-            <h5 className="text-center featureText">All Featured Products</h5>
-          </div>
-          <div className="products">
-            {/* {loading ? (
-              <LoadingBox />
-            ) : error ? (
-              <MessageBox variant="danger">{error}</MessageBox>
-            ) : ( */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
+            <Typography variant="h6">All Featured Products</Typography>
+          </Box>
+
+          <Box sx={{ m: 4 }}>
+            <Grid container spacing={4}>
+              {products.map((product, key) => (
+                <Cards
+                  product={product}
+                  // addToCartHandler={() => addToCartHandler(product)}
+                  loading={loading}
+                  key={key}
+                />
+              ))}
+            </Grid>
+          </Box>
+
+          {/* <div className="products">
             <Row>
               {products.map((product) => (
                 <Col key={product._id} sm={6} md={4} lg={4} className="mb-3">
@@ -43,12 +53,7 @@ const HomeScreen = () => {
                 </Col>
               ))}
             </Row>
-            {/* {products.map((product) => (
-              <Cards product={product} />
-            ))}
-
-            {/* )} */}
-          </div>
+          </div> */}
         </>
       )}
     </>
